@@ -1,19 +1,19 @@
 FROM python:3.9-slim
 
-# 🔧 Install required build tools (fix tgcrypto error)
+# ✅ Fix: Install GCC and required build tools (necessary for tgcrypto)
 RUN apt-get update && \
     apt-get install -y gcc build-essential python3-dev libffi-dev && \
     rm -rf /var/lib/apt/lists/*
 
-# 👷 Set working directory
+# 📂 Working directory
 WORKDIR /app
 
-# 📂 Copy project files
+# 📥 Copy your repo files
 COPY repo /app
 
 # 📦 Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
-    if [ -f "requirements.txt" ]; then pip install --no-cache-dir -r requirements.txt; fi
+    pip install --no-cache-dir -r requirements.txt
 
-# 🚀 Run the bot
+# 🚀 Start the bot
 CMD ["python", "bot.py"]
