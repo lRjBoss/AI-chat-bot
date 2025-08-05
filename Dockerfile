@@ -1,18 +1,12 @@
-# Use slim Python image
 FROM python:3.9-slim
 
-# Install system packages needed to build tgcrypto
-RUN apt-get update && apt-get install -y gcc g++ build-essential && rm -rf /var/lib/apt/lists/*
+# Install build tools required for tgcrypto
+RUN apt-get update && apt-get install -y gcc build-essential && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Copy requirements and install dependencies
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY repo /app
 
-# Copy bot script
-COPY bot.py .
+RUN if [ -f "/app/requirements.txt" ]; then pip install --no-cache-dir -r /app/requirements.txt; fi
 
-# Run bot
 CMD ["python", "bot.py"]
