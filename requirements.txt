@@ -1,0 +1,5 @@
+pyrogram
+tgcrypto
+google-generativeai
+nest_asyncio
+requests
